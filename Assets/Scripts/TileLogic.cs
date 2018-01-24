@@ -25,26 +25,29 @@ public class TileLogic : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		horizontal();
-		vertical();
-		diagRight();
-		diagLeft();
+		bool horizontalRow = rowAttained(west, east);
+		bool verticalRow = rowAttained(north, south);
+		bool diagRightRow = rowAttained(southWest, northEast);
+		bool diagLeftRow = rowAttained(northWest, southEast);
 		
-		if(horizontal().Equals(true) || vertical().Equals(true) ||
-		   diagRight().Equals(true) || diagLeft().Equals(true))
+		if(horizontalRow || verticalRow || diagRightRow || diagLeftRow)
 		{
 			Debug.Log("Tic-tac-toe, " + numConnectionsNeeded + " in a row!");
 		}
 	}
 
-	bool horizontal()
+	bool rowAttained(Collider direction1, Collider direction2)
 	{
-		if(west || east) 
-		{ 
-			connections["horizontal"] += 1; 
+		if(direction1 && direction2)
+		{
+			connections[direction1.tag] += 2;
+		} 
+		else if(direction1 || direction2)
+		{
+			connections[direction1.tag] += 1;
 		}
 
-		if(connections["horizontal"] >= numConnectionsNeeded)
+		if(connections[direction1.tag] >= numConnectionsNeeded)
 		{
 			return true;
 		}
@@ -52,48 +55,4 @@ public class TileLogic : MonoBehaviour {
 		return false;
 	}
 
-	bool vertical()
-	{
-		if(north || south) 
-		{ 
-			connections["vertical"] += 1; 
-		}
-
-		if(connections["vertical"] >= numConnectionsNeeded)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	bool diagRight()
-	{
-		if(southWest || northEast) 
-		{ 
-			connections["diagRight"] += 1; 
-		}
-
-		if(connections["diagRight"] >= numConnectionsNeeded)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	bool diagLeft()
-	{
-		if(northWest || southEast) 
-		{ 
-			connections["diagLeft"] += 1; 
-		}
-
-		if(connections["diagLeft"] >= numConnectionsNeeded)
-		{
-			return true;
-		}
-
-		return false;
-	}
 }
