@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TileLogic : MonoBehaviour {
 
+	Dictionary<string, int> connections;
+	public int numConnectionsNeeded;
 	public Collider north;
 	public Collider northEast;
 	public Collider east;
@@ -12,34 +14,86 @@ public class TileLogic : MonoBehaviour {
 	public Collider southWest;
 	public Collider west;
 	public Collider northWest;
-	List<string> collisionList;
-	bool collisionDetected;
-
+	
 	void Start () 
 	{
-		collisionList = new List<string>();
-		collisionDetected = false;
+		connections.Add("horizontal", 0);
+		connections.Add("vertical", 0);
+		connections.Add("diagRight", 0);
+		connections.Add("diagLeft", 0);
 	}
 
-	void OnCollisionEnter(Collider collider)
+	void OnMouseDown()
 	{
-		collisionList.Add(collider.name);
-		collisionDetected = true;
-	}
-	
-	void Update () 
-	{
-		if(collisionDetected)
+		horizontal();
+		vertical();
+		diagRight();
+		diagLeft();
+		
+		if(horizontal().Equals(true) || vertical().Equals(true) ||
+		   diagRight().Equals(true) || diagLeft().Equals(true))
 		{
-			if((collisionList.Contains(north.name) && collisionList.Contains(south.name)) ||
-			(collisionList.Contains(west.name) && collisionList.Contains(east.name)) ||
-			(collisionList.Contains(northWest.name) && collisionList.Contains(southEast.name)) ||
-			(collisionList.Contains(northEast.name) && collisionList.Contains(southWest.name)))
-			{
-				Debug.Log("Tic-Tac-Toe, three in a row!");
-			}
-
-			collisionDetected = false;
+			Debug.Log("Tic-tac-toe, " + numConnectionsNeeded + " in a row!");
 		}
+	}
+
+	bool horizontal()
+	{
+		if(west || east) 
+		{ 
+			connections["horizontal"] += 1; 
+		}
+
+		if(connections["horizontal"] >= numConnectionsNeeded)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool vertical()
+	{
+		if(north || south) 
+		{ 
+			connections["vertical"] += 1; 
+		}
+
+		if(connections["vertical"] >= numConnectionsNeeded)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool diagRight()
+	{
+		if(southWest || northEast) 
+		{ 
+			connections["diagRight"] += 1; 
+		}
+
+		if(connections["diagRight"] >= numConnectionsNeeded)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool diagLeft()
+	{
+		if(northWest || southEast) 
+		{ 
+			connections["diagLeft"] += 1; 
+		}
+
+		if(connections["diagLeft"] >= numConnectionsNeeded)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }
