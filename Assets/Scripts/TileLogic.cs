@@ -25,18 +25,18 @@ public class TileLogic : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		bool horizontalRow = rowAttained(west, east);
-		bool verticalRow = rowAttained(north, south);
-		bool diagRightRow = rowAttained(southWest, northEast);
-		bool diagLeftRow = rowAttained(northWest, southEast);
+		bool horizontalRowFound = isRowAttained(west, east);
+		bool verticalRowFound = isRowAttained(north, south);
+		bool diagRightRowFound = isRowAttained(southWest, northEast);
+		bool diagLeftRowFound = isRowAttained(northWest, southEast);
 		
-		if(horizontalRow || verticalRow || diagRightRow || diagLeftRow)
+		if(horizontalRowFound || verticalRowFound || diagRightRowFound || diagLeftRowFound)
 		{
 			Debug.Log("Tic-tac-toe, " + numConnectionsNeeded + " in a row!");
 		}
 	}
 
-	bool rowAttained(Collider direction1, Collider direction2)
+	bool isRowAttained(Collider direction1, Collider direction2)
 	{
 		if(direction1 && direction2)
 		{
