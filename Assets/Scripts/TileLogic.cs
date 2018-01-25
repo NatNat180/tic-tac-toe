@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TileLogic : MonoBehaviour {
 
-	GameObject tile;
 	public static Dictionary<string, int> connections;
 	public int numConnectionsNeeded;
 	public Collider north;
@@ -18,7 +17,7 @@ public class TileLogic : MonoBehaviour {
 	
 	void Start () 
 	{
-		tile = GetComponent<GameObject>();
+		gameObject.SetActive(false);
 		connections.Add("horizontal", 0);
 		connections.Add("vertical", 0);
 		connections.Add("diagRight", 0);
@@ -27,7 +26,8 @@ public class TileLogic : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		tile.SetActive(true);
+		gameObject.SetActive(true);
+		Debug.Log("Tile activated!");
 		bool horizontalRowFound = isRowAttained(west, east);
 		bool verticalRowFound = isRowAttained(north, south);
 		bool diagRightRowFound = isRowAttained(southWest, northEast);
