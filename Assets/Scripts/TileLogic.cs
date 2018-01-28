@@ -36,37 +36,37 @@ public class TileLogic : MonoBehaviour
 
     void OnMouseDown()
     {
+        // establishing num tiles to print upon win
+        int numTiles = numConnectionsNeeded + 1;
+
+        /* setting parent object to inactive to avoid inner collisions 
+        - child objects can still be active even if parent object is not */
+        gameObject.SetActive(false);
+
         foreach (GameObject direction in allDirections)
         {
             direction.SetActive(true);
         }
         Debug.Log("Tile activated!");
 
-        bool horizontalRowFound = isRowAttained(west, east);
-        bool verticalRowFound = isRowAttained(north, south);
-        bool diagRightRowFound = isRowAttained(southWest, northEast);
-        bool diagLeftRowFound = isRowAttained(northWest, southEast);
+        bool rowFound = isRowAttained(connections);
 
-        if (horizontalRowFound || verticalRowFound || diagRightRowFound || diagLeftRowFound)
+        if (rowFound)
         {
-            Debug.Log("Tic-tac-toe, " + numConnectionsNeeded + " in a row!");
+            Debug.Log("Tic-tac-toe, " + numTiles + " in a row!");
         }
     }
 
-    bool isRowAttained(Collider direction1, Collider direction2)
+    bool isRowAttained(Dictionary<string, int> directions)
     {
-        if (direction1 && direction2)
+        
+        foreach (KeyValuePair <string, int> direction in directions)
         {
-            connections[direction1.tag] += 2;
-        }
-        else if (direction1 || direction2)
-        {
-            connections[direction1.tag] += 1;
-        }
-
-        if (connections[direction1.tag] >= numConnectionsNeeded)
-        {
-            return true;
+            if (direction.Value >= numConnectionsNeeded)
+            {
+                Debug.Log(direction.Value + " row found!");
+                return true;
+            }
         }
 
         return false;
