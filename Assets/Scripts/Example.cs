@@ -10,7 +10,7 @@ using UnityEngine;
 
    Any one of these equations must be done 'n' amount of times
    -----------------------
-   All of this assumes that the number of rows and columns are the exact same so it may not hit every use case,
+   All of this assumes that the number of rows and columns (n) are the exact same so it may not hit every use case,
    but frankly, they should be the same number for a regular game (i.e. 3 x 3 and NOT 3 x 4 or something similar). 
    With that assumption, implementing these equations into functions should make the game scalable.
  */
