@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /* --- Logic for rows ---
-   Horizontal: (n +/- 1)
-   Vertical: (n +/- n)
-   diagRight: (n +/- (n - 1))
-   diagLeft: (n +/- (n + 1))
+n = number of columns and rows
+i = starting tile
 
-   Any one of these equations must be done 'n' amount of times
+   Horizontal: (i + 1)
+   Vertical: (i + n)
+   diagRight: (i + (n - 1))
+   diagLeft: (i + (n + 1))
+
+Any one of these equations must be done 'n' amount of times
    -----------------------
    All of this assumes that the number of rows and columns (n) are the exact same so it may not hit every use case,
    but frankly, they should be the same number for a regular game (i.e. 3 x 3 and NOT 3 x 4 or something similar). 
