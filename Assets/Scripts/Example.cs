@@ -29,8 +29,7 @@ public class Example : MonoBehaviour
     {
         grid = new GameObject[gridNum, gridNum];
     }
-
-    /* Will add functions for vertical, diagLeft and diagRight rows later */
+    
     void OnMouseDown()
     {
         bool isHorizontalRow = horizRowMade(grid);
