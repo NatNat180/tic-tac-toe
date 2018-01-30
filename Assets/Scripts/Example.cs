@@ -29,7 +29,7 @@ public class Example : MonoBehaviour
     {
         grid = new GameObject[gridNum, gridNum];
     }
-    
+
     void OnMouseDown()
     {
         bool isHorizontalRow = horizRowMade(grid);
@@ -57,9 +57,9 @@ public class Example : MonoBehaviour
                 if (grid[i, j].activeSelf)
                 {
                     activeTiles += 1;
-                    if (activeTiles >= numActiveTilesNeeded) { return true; }
                 }
             }
+            if (activeTiles >= numActiveTilesNeeded) { return true; }
         }
 
         return false;
