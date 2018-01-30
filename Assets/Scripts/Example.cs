@@ -111,7 +111,7 @@ public class Example : MonoBehaviour
 
     /* For finding a row from top-right to bottom-left, a little extra work must be done...
     First, we'll use a loop to iterate through the full length of the grid.
-    For each iteration, we want to work -backwards- starting from the last index
+    For each iteration, we want to work -backwards- starting from the last index of each iteration.
     
     Example: for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
     
@@ -134,7 +134,6 @@ public class Example : MonoBehaviour
     1 2 [3]
     4 [5] 6
     [7] 8 9
-    
     */
     bool topRightToBottomLeftRowMade(GameObject[,] grid)
     {
