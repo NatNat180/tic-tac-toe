@@ -65,9 +65,23 @@ public class Example : MonoBehaviour
         return false;
     }
 
-    /* Logic to come */
+    /* Finding vertical rows ends up being just about the same logic, 
+    only we swap the indexes of the array for checking an active tile. */
     bool vertRowMade(GameObject[,] grid)
     {
+        for (int i = 0; i < grid.Length; i++)
+        {
+            int activeTiles = 0;
+            for (int j = 0; j < grid.Length; j++)
+            {
+                if (grid[j, i].activeSelf)
+                {
+                    activeTiles += 1;
+                }
+            }
+            if (activeTiles >= numActiveTilesNeeded) { return true; }
+        }
+
         return false;
     }
 
