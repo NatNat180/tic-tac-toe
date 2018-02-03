@@ -2083,9 +2083,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e53088ccf64e6242acbb3f103fcf56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridNum: 100
+  gridNum: 10
   numActiveTilesNeeded: 3
   gridtile: {fileID: 1571661714567892, guid: 0300ba842af43ca4695201a82db56157, type: 2}
+  border: 1.65
 --- !u!224 &1566005073
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2152,8 +2153,8 @@ Camera:
   m_GameObject: {fileID: 1770389174}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
