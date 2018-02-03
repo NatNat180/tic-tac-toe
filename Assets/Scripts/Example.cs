@@ -24,9 +24,23 @@ public class Example : MonoBehaviour
     public int gridNum;
     public GameObject[,] grid;
     public int numActiveTilesNeeded;
+    public GameObject gridtile;
 
     void Start()
     {
+        for (int p = 0; p < gridNum; p++)
+        {
+            for (int i = 0; i < gridNum; i++)
+            {
+                float border = 1.1f;
+
+                Instantiate(gridtile, new Vector3(i * border, 0, p*border), Quaternion.Euler(90, 0, 0));
+
+                //Instantiate(gridtile, new Vector3(i * border, 0, 1 * border), Quaternion.Euler(90, 0, 0));
+                //Instantiate(gridtile, new Vector3(i * border, 0, 2 * border), Quaternion.Euler(90, 0, 0));
+
+            }
+        }
         grid = new GameObject[gridNum, gridNum];
     }
 
