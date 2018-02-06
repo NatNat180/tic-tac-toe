@@ -29,24 +29,27 @@ public class BoardLogic : MonoBehaviour
 
     void Start()
     {
+        grid = new GameObject[gridNum, gridNum];
         for (int p = 0; p < gridNum; p++)
         {
             for (int i = 0; i < gridNum; i++)
             {
-                Instantiate(gridtile, new Vector3(i * border, 0, p*border), Quaternion.Euler(90, 0, 0));
+                GameObject tile = Instantiate(gridtile, new Vector3(i * border, 0, p*border), Quaternion.Euler(90, 0, 0));
+                grid[p, i] = tile;
             }
         }
-        grid = new GameObject[gridNum, gridNum];
+
+        Debug.Log(grid.Length + " tiles added!");
     }
 
     void Update()
     {
-        //bool isHorizontalRow = horizRowMade(grid);
+        bool isHorizontalRow = horizRowMade(grid);
         bool isVerticalRow = vertRowMade(grid);
         bool isTopLeftToBottomRightRow = topLeftToBottomRightRowMade(grid);
         bool isTopRightToBottomLeftRow = topRightToBottomLeftRowMade(grid);
 
-        if (/*isHorizontalRow || */isVerticalRow
+        if (isHorizontalRow || isVerticalRow
             || isTopLeftToBottomRightRow || isTopRightToBottomLeftRow)
         {
             Debug.Log("Tic-tac-toe, " + numActiveTilesNeeded + " in a row!");
@@ -58,12 +61,12 @@ public class BoardLogic : MonoBehaviour
 	and count if all objects within a given row (i) are active. */
     bool horizRowMade(GameObject[,] grid)
     {
-        for (int i = 0; i < grid.Length; i++)
+        for (int i = 0; i < grid.GetLength(0); i++)
         {
             int activeTiles = 0;
-            for (int j = 0; j < grid.GetLength(i); j++)
+            for (int j = 0; j < grid.GetLength(1); j++)
             {
-                if (grid[i, j].activeSelf)
+                if (grid[i, j].tag == "isActive")
                 {
                     activeTiles += 1;
                 }
@@ -78,12 +81,12 @@ public class BoardLogic : MonoBehaviour
     only we swap the indexes of the array for checking an active tile. */
     bool vertRowMade(GameObject[,] grid)
     {
-        for (int i = 0; i < grid.Length; i++)
+        for (int i = 0; i < grid.GetLength(0); i++)
         {
             int activeTiles = 0;
-            for (int j = 0; j < grid.Length; j++)
+            for (int j = 0; j < grid.GetLength(1); j++)
             {
-                if (grid[j, i].activeSelf)
+                if (grid[j, i].tag == "isActive")
                 {
                     activeTiles += 1;
                 }
@@ -119,9 +122,9 @@ public class BoardLogic : MonoBehaviour
     bool topLeftToBottomRightRowMade(GameObject[,] grid)
     {
         int activeTiles = 0;
-        for (int i = 0; i < grid.Length; i++)
+        for (int i = 0; i < grid.GetLength(0); i++)
         {
-            if (grid[i, i].activeSelf)
+            if (grid[i, i].tag == "isActive")
             {
                 activeTiles += 1;
             }
@@ -160,10 +163,10 @@ public class BoardLogic : MonoBehaviour
     bool topRightToBottomLeftRowMade(GameObject[,] grid)
     {
         int activeTiles = 0;
-        int nextIndex = grid.Length - 1;
-        for (int i = 0; i < grid.Length; i++)
+        int nextIndex = grid.GetLength(0) - 1;
+        for (int i = 0; i < grid.GetLength(0); i++)
         {
-            if (grid[i, grid.GetLength(nextIndex)].activeSelf)
+            if (grid[i, nextIndex].tag == "isActive")
             {
                 activeTiles += 1;
             }

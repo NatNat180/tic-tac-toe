@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileClick : MonoBehaviour {
+public class Tile : MonoBehaviour {
+
+	
+
+	void Start () 
+	{
+		gameObject.tag = "isInactive";
+	}
 
     void OnMouseDown()
     {
-        gameObject.SetActive(true);
+        gameObject.tag = "isActive";
 		Debug.Log("Tile activated! = " + gameObject.activeSelf);
     }
 }
