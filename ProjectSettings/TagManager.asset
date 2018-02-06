@@ -8,6 +8,8 @@ TagManager:
   - diagLeft
   - vertical
   - horizontal
+  - isInactive
+  - isActive
   layers:
   - Default
   - TransparentFX

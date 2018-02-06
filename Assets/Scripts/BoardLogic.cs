@@ -42,7 +42,7 @@ public class BoardLogic : MonoBehaviour
         Debug.Log(grid.Length + " tiles added!");
     }
 
-    void Update()
+    void OnMouseDown()
     {
         bool isHorizontalRow = horizRowMade(grid);
         bool isVerticalRow = vertRowMade(grid);
