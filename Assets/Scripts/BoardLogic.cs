@@ -19,7 +19,7 @@ All of this assumes that the number of rows and columns (n) are the exact same s
 but frankly, they should be the same number for a regular game (i.e. 3 x 3 and NOT 3 x 4 or something similar). 
 With that assumption, implementing these equations into functions should make the game scalable.
  */
-public class Example : MonoBehaviour
+public class BoardLogic : MonoBehaviour
 {
     public int gridNum;
     public GameObject[,] grid;
@@ -33,25 +33,20 @@ public class Example : MonoBehaviour
         {
             for (int i = 0; i < gridNum; i++)
             {
-                
-
                 Instantiate(gridtile, new Vector3(i * border, 0, p*border), Quaternion.Euler(90, 0, 0));
-
-          
-
             }
         }
         grid = new GameObject[gridNum, gridNum];
     }
 
-    void OnMouseDown()
+    void Update()
     {
-        bool isHorizontalRow = horizRowMade(grid);
+        //bool isHorizontalRow = horizRowMade(grid);
         bool isVerticalRow = vertRowMade(grid);
         bool isTopLeftToBottomRightRow = topLeftToBottomRightRowMade(grid);
         bool isTopRightToBottomLeftRow = topRightToBottomLeftRowMade(grid);
 
-        if (isHorizontalRow || isVerticalRow
+        if (/*isHorizontalRow || */isVerticalRow
             || isTopLeftToBottomRightRow || isTopRightToBottomLeftRow)
         {
             Debug.Log("Tic-tac-toe, " + numActiveTilesNeeded + " in a row!");
