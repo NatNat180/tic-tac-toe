@@ -2,22 +2,11 @@
 #### Unity Project by Nathan Argall & Andrew Jeannett
 
 ### Logic for rows
-- n = number of columns and rows
-- i always starts on top row
------
-   - Horizontal: i = (i + 1)
-   - Vertical: i = (i + n)
-   - topRightToBottomLeft: i = (i + (n - 1))  
-   - topLeftToBottomRight: i = (i + (n + 1))
-------
-- Each equation must be done 'n' amount of times 
-- For the diagnal integers, we need to ensure that first iteration begins at rightmost or leftmost spot of grid
-
-All of this assumes that the number of rows and columns (n) are the exact same, so it may not hit every use-case. 
-With that assumption however, implementing these equations into functions should make the game scalable.
+The logic assumes that the number of rows and columns are the exact same, so it may not hit every use-case. 
+With that assumption however, we can make the game scalable.
 
 ## Horizontal Rows
-For finding a horizontal row, from the equation above, we can 
+For finding a horizontal row, we can 
 simply iterate through the multi-dimensional array sequentially, 
 and count if all objects within a given row (i) are active.
 
