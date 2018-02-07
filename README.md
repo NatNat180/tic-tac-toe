@@ -4,12 +4,12 @@
 ### Logic for rows
 - n = number of columns and rows
 - i always starts on top row
-
-   Horizontal: i = (i + 1)
-   Vertical: i = (i + n)
-   topRightToBottomLeft: i = (i + (n - 1))  
-   topLeftToBottomRight: i = (i + (n + 1))
-
+-----
+   - Horizontal: i = (i + 1)
+   - Vertical: i = (i + n)
+   - topRightToBottomLeft: i = (i + (n - 1))  
+   - topLeftToBottomRight: i = (i + (n + 1))
+------
 - Each equation must be done 'n' amount of times 
 - For the diagnal integers, we need to ensure that first iteration begins at rightmost or leftmost spot of grid
 
