@@ -2,8 +2,8 @@
 #### Unity Project by Nathan Argall & Andrew Jeannett
 
 ### Logic for rows
-n = number of columns and rows
-i always starts on top row
+- n = number of columns and rows
+- i always starts on top row
 
    Horizontal: i = (i + 1)
    Vertical: i = (i + n)
