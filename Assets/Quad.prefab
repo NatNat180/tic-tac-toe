@@ -107,3 +107,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae6aa02089bbf54694d31e23585707c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xObj: {fileID: 1343841597301996, guid: 9b742869bb2888e40921446541a8bea6, type: 2}
+  oObj: {fileID: 1694465791729278, guid: bb3228fe9acf59c4dadb63ddcaf334a3, type: 2}
