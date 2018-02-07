@@ -13,15 +13,18 @@ public class Tile : MonoBehaviour {
 
     void OnMouseDown()
     {
-		if (lastTileX)
+		if (gameObject.tag == "isInactive") 
 		{
-			gameObject.tag = "isOActive";
-			lastTileX = false;
-		} 
-		else 
-		{
-			gameObject.tag = "isXActive";
-			lastTileX = true;
+			if (lastTileX)
+			{
+				gameObject.tag = "isOActive";
+				lastTileX = false;
+			} 
+			else
+			{
+				gameObject.tag = "isXActive";
+				lastTileX = true;
+			}
 		}
 		Debug.Log("Tile activated! = " + gameObject.tag);
     }
