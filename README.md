@@ -30,15 +30,16 @@ For finding a row from top-left to bottom-right, we create a loop
 that iterates through the whole array, and check the matching index of each index
 for active tiles.
     
-Example: for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
-the 0th index of the outer-loop = {1,2,3}
-the 0th index of that index = 1
+### Example: 
+for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
+- the 0th index of the outer-loop = {1,2,3}
+- the 0th index of that index = 1
 
-the 1st index of the outer-loop = {4,5,6}
-the 1st index of that index = 5
+- the 1st index of the outer-loop = {4,5,6}
+- the 1st index of that index = 5
 
-the 2nd index of the outer-loop = {7,8,9}
-the 2nd index of that index = 9 
+- the 2nd index of the outer-loop = {7,8,9}
+- the 2nd index of that index = 9 
 
 Thus the result would be {{[1],2,3}, {4,[5],6}, {7,8,[9]}}, 
 resembling a diagonal row from top to bottom if drawn in a grid:
@@ -52,20 +53,21 @@ For finding a row from top-right to bottom-left, a little extra work must be don
 First, we'll use a loop to iterate through the full length of the grid.
 For each iteration, we want to work -backwards- starting from the last index of each iteration.
     
-Example: for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
+### Example: 
+for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
     
 We initialize nextIndex as (arrayLength - 1), which equals 2
     
-the 0th index of the outer-loop = {1,2,3}
-the nextIndex (2) of that index = 3
-nextIndex = nextIndex - 1 = 1
+- the 0th index of the outer-loop = {1,2,3}
+- the nextIndex (2) of that index = 3
+- nextIndex = nextIndex - 1 = 1
 
-the 1st index of the outer-loop = {4,5,6}
-the nextIndex (1) of that index = 5
-nextIndex = nextIndex - 1 = 0
+- the 1st index of the outer-loop = {4,5,6}
+- the nextIndex (1) of that index = 5
+- nextIndex = nextIndex - 1 = 0
 
-the 2nd index of the outer-loop = {7,8,9}
-the nextIndex (0) of that index = 7
+- the 2nd index of the outer-loop = {7,8,9}
+- the nextIndex (0) of that index = 7
 
 Thus the result would be {{1,2,[3]}, {4,[5],6}, {[7],8,9}}, 
 resembling a diagonal row from top to bottom if drawn in a grid:
