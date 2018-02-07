@@ -1,4 +1,5 @@
-# tic-tac-toe
+# Tic-Tac-Toe
+#### Unity Project by Nathan Argall & Andrew Jeannett
 
 ### Logic for rows
 n = number of columns and rows
