@@ -2,23 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/* 
---- Logic for rows ---
-n = number of columns and rows
-i always starts on top row
-
-   Horizontal: i = (i + 1)
-   Vertical: i = (i + n)
-   topRightToBottomLeft: i = (i + (n - 1))  
-   topLeftToBottomRight: i = (i + (n + 1))
-
-- Each equation must be done 'n' amount of times 
-- For the diagnal integers, we need to ensure that first iteration begins at rightmost or leftmost spot of grid
------------------------
-All of this assumes that the number of rows and columns (n) are the exact same so it may not hit every use-case,
-but frankly, they should be the same number for a regular game (i.e. 3 x 3 and NOT 3 x 4 or something similar). 
-With that assumption, implementing these equations into functions should make the game scalable.
- */
 public class BoardLogic : MonoBehaviour
 {
     public int gridNum;
@@ -34,8 +17,10 @@ public class BoardLogic : MonoBehaviour
         {
             for (int i = 0; i < gridNum; i++)
             {
-                GameObject tile = Instantiate(gridtile, new Vector3(i * border, 0, p*border), Quaternion.Euler(90, 0, 0));
-                grid[p, i] = tile;
+                Vector3 tilePos = new Vector3 (-gridNum / 2  + p, 0, -gridNum / 2  + i);                 
+                GameObject tile = Instantiate(gridtile, tilePos, Quaternion.Euler(90, 0, 0));                 
+                grid[p, i] = tile;                 
+                tile.transform.localScale = Vector3.one * (1-border);
             }
         }
 
@@ -56,123 +41,90 @@ public class BoardLogic : MonoBehaviour
         }
     }
 
-    /* For finding a horizontal row, from the equation above, we can 
-	simply iterate through the multi-dimensional array sequentially, 
-	and count if all objects within a given row (i) are active. */
     bool horizRowMade(GameObject[,] grid)
     {
         for (int i = 0; i < grid.GetLength(0); i++)
         {
-            int activeTiles = 0;
+            int activeXTiles = 0; 
+            int activeOTiles = 0; 
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                if (grid[i, j].tag == "isActive")
+                if (grid[i, j].tag == "isXActive")
                 {
-                    activeTiles += 1;
+                    activeXTiles += 1;
+                }
+                if (grid[i, j].tag == "isOActive")
+                {
+                    activeOTiles += 1;
                 }
             }
-            if (activeTiles >= numActiveTilesNeeded) { return true; }
+            if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
         }
 
         return false;
     }
 
-    /* Finding vertical rows ends up being just about the same logic, 
-    only we swap the indexes of the array for checking an active tile. */
     bool vertRowMade(GameObject[,] grid)
     {
         for (int i = 0; i < grid.GetLength(0); i++)
         {
-            int activeTiles = 0;
+            int activeXTiles = 0; 
+            int activeOTiles = 0; 
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                if (grid[j, i].tag == "isActive")
+                if (grid[j, i].tag == "isXActive")
                 {
-                    activeTiles += 1;
+                    activeXTiles += 1;
+                }
+                if (grid[j, i].tag == "isOActive")
+                {
+                    activeOTiles += 1;
                 }
             }
-            if (activeTiles >= numActiveTilesNeeded) { return true; }
+            if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
         }
 
         return false;
     }
 
-    /* For finding a row from top-left to bottom-right, we create a loop 
-    that iterates through the whole array, and check the matching index of each index
-    for active tiles.
-    
-    Example: for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
-    the 0th index of the outer-loop = {1,2,3}
-    the 0th index of that index = 1
-
-    the 1st index of the outer-loop = {4,5,6}
-    the 1st index of that index = 5
-
-    the 2nd index of the outer-loop = {7,8,9}
-    the 2nd index of that index = 9 
-
-    Thus the result would be {{[1],2,3}, {4,[5],6}, {7,8,[9]}}, 
-    resembling a diagonal row from top to bottom if drawn in a grid:
-
-    [1] 2 3
-    4 [5] 6
-    7 8 [9]
-
-    Do you like how the explanation of the solution actually took more space than the solution itself?*/
     bool topLeftToBottomRightRowMade(GameObject[,] grid)
     {
-        int activeTiles = 0;
+        int activeXTiles = 0; 
+        int activeOTiles = 0; 
         for (int i = 0; i < grid.GetLength(0); i++)
         {
-            if (grid[i, i].tag == "isActive")
+            if (grid[i, i].tag == "isXActive")
             {
-                activeTiles += 1;
+                activeXTiles += 1;
+            }
+            if (grid[i, i].tag == "isOActive")
+            {
+                activeOTiles += 1;
             }
         }
-        if (activeTiles >= numActiveTilesNeeded) { return true; }
+        if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
 
         return false;
     }
 
-    /* For finding a row from top-right to bottom-left, a little extra work must be done...
-    First, we'll use a loop to iterate through the full length of the grid.
-    For each iteration, we want to work -backwards- starting from the last index of each iteration.
-    
-    Example: for the given multi-dimensional array: {{1,2,3},{4,5,6},{7,8,9}}, 
-    
-    We initialize nextIndex as (arrayLength - 1), which equals 2
-    
-    the 0th index of the outer-loop = {1,2,3}
-    the nextIndex (2) of that index = 3
-    nextIndex = nextIndex - 1 = 1
-
-    the 1st index of the outer-loop = {4,5,6}
-    the nextIndex (1) of that index = 5
-    nextIndex = nextIndex - 1 = 0
-
-    the 2nd index of the outer-loop = {7,8,9}
-    the nextIndex (0) of that index = 7
-
-    Thus the result would be {{1,2,[3]}, {4,[5],6}, {[7],8,9}}, 
-    resembling a diagonal row from top to bottom if drawn in a grid:
-
-    1 2 [3]
-    4 [5] 6
-    [7] 8 9
-    */
     bool topRightToBottomLeftRowMade(GameObject[,] grid)
     {
-        int activeTiles = 0;
+        int activeXTiles = 0; 
+        int activeOTiles = 0; 
         int nextIndex = grid.GetLength(0) - 1;
         for (int i = 0; i < grid.GetLength(0); i++)
         {
-            if (grid[i, nextIndex].tag == "isActive")
+            if (grid[i, nextIndex].tag == "isXActive")
             {
-                activeTiles += 1;
+                activeXTiles += 1;
+            }
+            if (grid[i, nextIndex].tag == "isOActive")
+            {
+                activeOTiles += 1;
             }
             nextIndex -= 1;
         }
-        if (activeTiles >= numActiveTilesNeeded) { return true; }
+        if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
 
         return false;
     }

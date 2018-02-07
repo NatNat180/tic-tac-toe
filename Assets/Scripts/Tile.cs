@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
 
-	
+	public static bool lastTileX;
 
 	void Start () 
 	{
@@ -13,7 +13,16 @@ public class Tile : MonoBehaviour {
 
     void OnMouseDown()
     {
-        gameObject.tag = "isActive";
-		Debug.Log("Tile activated! = " + gameObject.activeSelf);
+		if (lastTileX)
+		{
+			gameObject.tag = "isOActive";
+			lastTileX = false;
+		} 
+		else 
+		{
+			gameObject.tag = "isXActive";
+			lastTileX = true;
+		}
+		Debug.Log("Tile activated! = " + gameObject.tag);
     }
 }

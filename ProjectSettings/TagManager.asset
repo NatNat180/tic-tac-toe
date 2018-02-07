@@ -10,6 +10,10 @@ TagManager:
   - horizontal
   - isInactive
   - isActive
+  - isXInactive
+  - isXActive
+  - isOInactive
+  - isOActive
   layers:
   - Default
   - TransparentFX
