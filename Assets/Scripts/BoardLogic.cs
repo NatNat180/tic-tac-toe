@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardLogic : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class BoardLogic : MonoBehaviour
     public int numActiveTilesNeeded;
     public GameObject gridtile;
     public float border;
+    public string winMessage;
+    public Text winText;
 
     void Start()
     {
@@ -37,8 +40,23 @@ public class BoardLogic : MonoBehaviour
         if (isHorizontalRow || isVerticalRow
             || isTopLeftToBottomRightRow || isTopRightToBottomLeftRow)
         {
-            Debug.Log("Tic-tac-toe, " + numActiveTilesNeeded + " in a row!");
+            if (Tile.lastTileX== true)
+            {
+                Debug.Log("X wins!!");
+                winMessage = ("X Wins!");
+               winText.text = winMessage;
+
+            }
+            if (Tile.lastTileX == false)
+            {
+                Debug.Log("O wins!!");
+                winMessage = ("O Wins!!");
+                winText.text = winMessage;
+            }
+
+            // Debug.Log(" Tic-tac-toe, " + numActiveTilesNeeded + " in a row!"+ Tile.lastTileX);
         }
+       
     }
 
     bool horizRowMade(GameObject[,] grid)
