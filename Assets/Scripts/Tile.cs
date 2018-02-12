@@ -31,6 +31,5 @@ public class Tile : MonoBehaviour {
                 Instantiate(xObj, piecePos, Quaternion.Euler(90,45,0));
             }
 		}
-		Debug.Log("Tile activated! = " + gameObject.tag);
     }
 }

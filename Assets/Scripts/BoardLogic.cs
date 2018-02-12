@@ -32,19 +32,20 @@ public class BoardLogic : MonoBehaviour
 
     void Update()
     {
-        bool isHorizontalRow = horizRowMade(grid);
-        bool isVerticalRow = vertRowMade(grid);
-        bool isTopLeftToBottomRightRow = topLeftToBottomRightRowMade(grid);
-        bool isTopRightToBottomLeftRow = topRightToBottomLeftRowMade(grid);
+        // bool isHorizontalRow = horizRowMade(grid);
+        // bool isVerticalRow = vertRowMade(grid);
+        // bool isTopLeftToBottomRightRow = topLeftToBottomRightRowMade(grid);
+        // bool isTopRightToBottomLeftRow = topRightToBottomLeftRowMade(grid);
 
-        if (isHorizontalRow || isVerticalRow
-            || isTopLeftToBottomRightRow || isTopRightToBottomLeftRow)
+        if (rowMade(grid) /*isHorizontalRow || isVerticalRow
+            || isTopLeftToBottomRightRow || isTopRightToBottomLeftRow*/
+           )
         {
-            if (Tile.lastTileX== true)
+            if (Tile.lastTileX == true)
             {
                 Debug.Log("X wins!!");
                 winMessage = ("X Wins!");
-               winText.text = winMessage;
+                winText.text = winMessage;
 
             }
             if (Tile.lastTileX == false)
@@ -70,11 +71,11 @@ public class BoardLogic : MonoBehaviour
                 if (grid[i, j].tag == "isXActive")
                 {
                     activeXTiles += 1;
-                }
+                }else{activeXTiles = 0;}
                 if (grid[i, j].tag == "isOActive")
                 {
                     activeOTiles += 1;
-                }
+                }else{activeOTiles = 0;}
             }
             if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
         }
@@ -93,11 +94,11 @@ public class BoardLogic : MonoBehaviour
                 if (grid[j, i].tag == "isXActive")
                 {
                     activeXTiles += 1;
-                }
+                } else if (grid[j, i].tag == "isInactive") { activeXTiles = 0; }
                 if (grid[j, i].tag == "isOActive")
                 {
                     activeOTiles += 1;
-                }
+                } else if (grid[j, i].tag == "isInactive") { activeOTiles = 0; }
             }
             if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
         }
@@ -143,6 +144,117 @@ public class BoardLogic : MonoBehaviour
             nextIndex -= 1;
         }
         if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
+
+        return false;
+    }
+
+    bool rowMade(GameObject[,] grid)
+    {
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                if (grid[i, j].tag == "isXActive" || grid[i, j].tag == "isOActive")
+                {
+                    int activeX = grid[i, j].tag == "isXActive" ? 1 : 0;
+                    int activeO = grid[i, j].tag == "isOActive" ? 1 : 0;
+                    if (horizMade(grid, i, j, activeX, activeO) || vertRowMade(grid, i, j, activeX, activeO))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    bool horizMade(GameObject[,] grid, int firstCoordinate, int startingPoint, int activeX, int activeO)
+    {    
+        int activeXTiles = activeX; 
+        int activeOTiles = activeO;
+
+        // check forward
+        for (int i = startingPoint + 1; i < grid.GetLength(0); i++) 
+        { 
+            if (grid[firstCoordinate, i].tag == "isXActive" && activeXTiles >= 1)
+            {
+                activeXTiles += 1;
+            } 
+            else if (grid[firstCoordinate, i].tag == "isOActive" && activeOTiles >= 1)
+            {
+                activeOTiles += 1;
+            }
+            else { break; }
+        }
+
+        // check backward
+        for (int i = startingPoint - 1; i >= 0; i--)
+        {
+            if (grid[firstCoordinate, i].tag == "isXActive" && activeXTiles >= 1)
+            {
+                activeXTiles += 1;
+            } 
+            else if (grid[firstCoordinate, i].tag == "isOActive" && activeOTiles >= 1)
+            {
+                activeOTiles += 1;
+            }
+            else { break; }
+        }
+        if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
+
+        return false;
+    }
+
+    bool vertRowMade(GameObject[,] grid, int firstCoordinate, int startingPoint, int activeX, int activeO)
+    {
+        // int activeXTiles = 0; 
+        // int activeOTiles = 0; 
+
+        // if (grid[startingPoint, firstCoordinate].tag == "isXActive")
+        // {
+        //     activeXTiles += 1;
+        // } 
+        // if (grid[startingPoint, firstCoordinate].tag == "isOActive")
+        // {
+        //     activeOTiles += 1;
+        // }
+
+        // // check forward
+        // for (int i = startingPoint + 1; i < grid.GetLength(0); i++)
+        // {
+        //     if (grid[i, firstCoordinate].tag == "isXActive")
+        //     {
+        //         activeXTiles += 1;
+        //     }
+        //     if (grid[i, firstCoordinate].tag == "isOActive")
+        //     {
+        //         activeOTiles += 1;
+        //     }
+        //     if (grid[i, firstCoordinate].tag == "isInactive") 
+        //     { 
+        //         activeXTiles = 0;
+        //         activeOTiles = 0; 
+        //     }
+        // }
+
+        // // check backward
+        // for (int i = startingPoint - 1; i >= 0; i--)
+        // {
+        //     if (grid[i, firstCoordinate].tag == "isXActive")
+        //     {
+        //         activeXTiles += 1;
+        //     }
+        //     if (grid[i, firstCoordinate].tag == "isOActive")
+        //     {
+        //         activeOTiles += 1;
+        //     }
+        //     if (grid[i, firstCoordinate].tag == "isInactive") 
+        //     { 
+        //         activeXTiles = 0;
+        //         activeOTiles = 0; 
+        //     }
+        // }
+        // if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
 
         return false;
     }
