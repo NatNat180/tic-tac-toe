@@ -175,7 +175,7 @@ public class BoardLogic : MonoBehaviour
 
         // check forward
         for (int i = startingPoint + 1; i < grid.GetLength(0); i++) 
-        { 
+        {
             if (grid[firstCoordinate, i].tag == "isXActive" && activeXTiles >= 1)
             {
                 activeXTiles += 1;
@@ -207,54 +207,37 @@ public class BoardLogic : MonoBehaviour
 
     bool vertRowMade(GameObject[,] grid, int firstCoordinate, int startingPoint, int activeX, int activeO)
     {
-        // int activeXTiles = 0; 
-        // int activeOTiles = 0; 
+        int activeXTiles = activeX; 
+        int activeOTiles = activeO; 
 
-        // if (grid[startingPoint, firstCoordinate].tag == "isXActive")
-        // {
-        //     activeXTiles += 1;
-        // } 
-        // if (grid[startingPoint, firstCoordinate].tag == "isOActive")
-        // {
-        //     activeOTiles += 1;
-        // }
+        // check forward
+        for (int i = firstCoordinate + 1; i < grid.GetLength(0); i++)
+        {
+            if (grid[i, startingPoint].tag == "isXActive" && activeXTiles >= 1)
+            {
+                activeXTiles += 1;
+            }
+            else if (grid[i, startingPoint].tag == "isOActive" && activeOTiles >= 1)
+            {
+                activeOTiles += 1;
+            }
+            else { break; }
+        }
 
-        // // check forward
-        // for (int i = startingPoint + 1; i < grid.GetLength(0); i++)
-        // {
-        //     if (grid[i, firstCoordinate].tag == "isXActive")
-        //     {
-        //         activeXTiles += 1;
-        //     }
-        //     if (grid[i, firstCoordinate].tag == "isOActive")
-        //     {
-        //         activeOTiles += 1;
-        //     }
-        //     if (grid[i, firstCoordinate].tag == "isInactive") 
-        //     { 
-        //         activeXTiles = 0;
-        //         activeOTiles = 0; 
-        //     }
-        // }
-
-        // // check backward
-        // for (int i = startingPoint - 1; i >= 0; i--)
-        // {
-        //     if (grid[i, firstCoordinate].tag == "isXActive")
-        //     {
-        //         activeXTiles += 1;
-        //     }
-        //     if (grid[i, firstCoordinate].tag == "isOActive")
-        //     {
-        //         activeOTiles += 1;
-        //     }
-        //     if (grid[i, firstCoordinate].tag == "isInactive") 
-        //     { 
-        //         activeXTiles = 0;
-        //         activeOTiles = 0; 
-        //     }
-        // }
-        // if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
+        // check backward
+        for (int i = firstCoordinate - 1; i >= 0; i--)
+        {
+            if (grid[i, startingPoint].tag == "isXActive" && activeXTiles >= 1)
+            {
+                activeXTiles += 1;
+            }
+            else if (grid[i, startingPoint].tag == "isOActive" && activeOTiles >= 1)
+            {
+                activeOTiles += 1;
+            }
+            else { break; }
+        }
+        if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
 
         return false;
     }
