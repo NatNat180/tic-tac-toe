@@ -158,7 +158,8 @@ public class BoardLogic : MonoBehaviour
                 {
                     int activeX = grid[i, j].tag == "isXActive" ? 1 : 0;
                     int activeO = grid[i, j].tag == "isOActive" ? 1 : 0;
-                    if (horizMade(grid, i, j, activeX, activeO) || vertRowMade(grid, i, j, activeX, activeO))
+                    if (horizMade(grid, i, j, activeX, activeO) || vertRowMade(grid, i, j, activeX, activeO)
+                    || topRightToBottomLeftRowMade(grid, i, j, activeX, activeO))
                     {
                         return true;
                     }
@@ -237,6 +238,62 @@ public class BoardLogic : MonoBehaviour
             }
             else { break; }
         }
+        if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
+
+        return false;
+    }
+
+    bool topRightToBottomLeftRowMade (GameObject[,] grid, int firstCoordinate, int startingPoint, int activeX, int activeO)
+    {
+        int activeXTiles = activeX; 
+        int activeOTiles = activeO;
+        int firstCoord = firstCoordinate;
+        int secondCoord = startingPoint;
+
+        //check forward
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            firstCoord = firstCoord + 1;
+            secondCoord = secondCoord - 1;
+            
+            if ((firstCoord >= 0 && firstCoord <= grid.GetLength(0)) 
+            && (secondCoord >= 0 && secondCoord <= grid.GetLength(0)))
+            {
+                if (grid[firstCoord, startingPoint].tag == "isXActive" && activeXTiles >= 1)
+                {
+                    Debug.Log("X at " + firstCoord + ", " + secondCoord + " is active!");
+                    activeXTiles += 1;
+                }
+                else if (grid[firstCoord, startingPoint].tag == "isOActive" && activeOTiles >= 1)
+                {
+                    activeOTiles += 1;
+                }
+                else { break; }
+            }            
+        }
+
+        //check backward
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            firstCoord = firstCoord - 1;
+            secondCoord = secondCoord + 1;
+            
+            if ((firstCoord >= 0 && firstCoord <= grid.GetLength(0)) 
+            && (secondCoord >=0 && secondCoord <= grid.GetLength(0)))
+            {
+                if (grid[firstCoord, startingPoint].tag == "isXActive" && activeXTiles >= 1)
+                {
+                    Debug.Log("X at " + firstCoord + ", " + secondCoord + " is active!");
+                    activeXTiles += 1;
+                }
+                else if (grid[firstCoord, startingPoint].tag == "isOActive" && activeOTiles >= 1)
+                {
+                    activeOTiles += 1;
+                }
+                else { break; }
+            }
+        }
+        Debug.Log("Active tiles = " + activeXTiles);
         if (activeXTiles >= numActiveTilesNeeded || activeOTiles >= numActiveTilesNeeded) { return true; }
 
         return false;
