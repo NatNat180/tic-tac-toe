@@ -162,8 +162,8 @@ public class BoardLogic : MonoBehaviour
             firstCoord = firstCoord + 1;
             secondCoord = secondCoord - 1;
             
-            if ((firstCoord > 0 && firstCoord < grid.GetLength(0)) 
-            && (secondCoord > 0 && secondCoord < grid.GetLength(0)))
+            if ((firstCoord >= 0 && firstCoord < grid.GetLength(0)) 
+            && (secondCoord >= 0 && secondCoord < grid.GetLength(0)))
             {
                 if (grid[firstCoord, secondCoord].tag == "isXActive" && activeXTiles >= 1)
                 {
@@ -187,8 +187,8 @@ public class BoardLogic : MonoBehaviour
             firstCoord = firstCoord - 1;
             secondCoord = secondCoord + 1;   
             
-            if ((firstCoord > 0 && firstCoord < grid.GetLength(0)) 
-            && (secondCoord > 0 && secondCoord < grid.GetLength(0)))
+            if ((firstCoord >= 0 && firstCoord < grid.GetLength(0)) 
+            && (secondCoord >= 0 && secondCoord < grid.GetLength(0)))
             {
                 if (grid[firstCoord, secondCoord].tag == "isXActive" && activeXTiles >= 1)
                 {
@@ -214,13 +214,13 @@ public class BoardLogic : MonoBehaviour
         int secondCoord = startingPoint;
 
         //check forward
-        for (int i = 0; i < grid.GetLength(0); i++)
+        for (int i = startingPoint; i < grid.GetLength(0); i++)
         {   
             firstCoord = firstCoord + 1;
             secondCoord = secondCoord + 1;
             
-            if ((firstCoord > 0 && firstCoord < grid.GetLength(0)) 
-            && (secondCoord > 0 && secondCoord < grid.GetLength(1)))
+            if ((firstCoord >= 0 && firstCoord < grid.GetLength(0)) 
+            && (secondCoord >= 0 && secondCoord < grid.GetLength(1)))
             {
                 if (grid[firstCoord, secondCoord].tag == "isXActive" && activeXTiles >= 1)
                 {
@@ -239,13 +239,13 @@ public class BoardLogic : MonoBehaviour
         secondCoord = startingPoint;
         
         //check backward
-        for (int i = 0; i < grid.GetLength(0); i++)
+        for (int i = startingPoint; i < grid.GetLength(0); i++)
         { 
             firstCoord = firstCoord - 1;
             secondCoord = secondCoord - 1;   
             
-            if ((firstCoord > 0 && firstCoord < grid.GetLength(0)) 
-            && (secondCoord > 0 && secondCoord < grid.GetLength(1)))
+            if ((firstCoord >= 0 && firstCoord < grid.GetLength(0)) 
+            && (secondCoord >= 0 && secondCoord < grid.GetLength(1)))
             {
                 if (grid[firstCoord, secondCoord].tag == "isXActive" && activeXTiles >= 1)
                 {
